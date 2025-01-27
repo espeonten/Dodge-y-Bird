@@ -1,21 +1,20 @@
-var bird, birdI
+var bird, birdA
 var obstacle, oImage, oGroup
 var score = 0;
 var gamestate = "play"
 
 function preload() {
-  birdI = loadImage("player.png")
+  birdA = loadAnimation("1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png")
   oImage = loadImage("obstacle.png")
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(rgb(0, 200, 255));
 
   edges = createEdgeSprites()
 
   bird = createSprite(width/10, height/2)
-  bird.addImage(birdI)
+  bird.addAnimation("bird", birdA)
   bird.scale = 0.4
   
   oGroup = new Group()
@@ -23,7 +22,7 @@ function setup() {
 
 //runs continuously
 function draw() {
-  background(rgb(0, 200, 255))
+  background(rgb(230, 200, 75))
   if (gamestate == "play") {
     bird.velocityY = 3
     fill("white")

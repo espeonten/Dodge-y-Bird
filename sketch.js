@@ -129,12 +129,12 @@ function draw() {
     if(heartsLeft == 0) {
       gamestate = "end"
     }
+    if(bird.isTouching(oGroup)) {
+      heartsLeft -= 1
+      oGroup[0].destroy()
+    }
     if(bird.isTouching(edges)){
       gamestate = "end"
-    }
-    if(bird.isTouching(oGroup)) {
-      oGroup.destroyEach()
-      heartsLeft -= 1
     }
     if(keyDown("up") || keyDown("space")){
       bird.velocityY = -10
@@ -152,6 +152,7 @@ function draw() {
     textSize(50)
     text("You lost! Score: "+score+" seconds! \n Press the down arrow key to go back to start screen!", width/10, height/2)
     if(keyDown("down")) {
+      heartsLeft = 3
       restartSound.play()
       score = 0
       gamestate = "start"
@@ -169,7 +170,8 @@ function spawnO() {
     obstacle = createSprite(width, randomY)
     obstacle.debug = false
     obstacle.addImage(oImage)
-    obstacle.velocityX = -(score+10)
+    obstacle.velocityX = -(score+20)
     score = obstacle.depth - 6
+    obstacle.lifetime = width - 1640
     oGroup.add(obstacle)
 }}

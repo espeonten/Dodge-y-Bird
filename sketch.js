@@ -6,7 +6,8 @@ var playButton, pbI
 var howButton, hbI
 var backButton, bbI
 var title, titleI
-var heart1, heart2, heart3, hImage, hGroup
+var heart1, heart2, heart3, hImage
+var heartsLeft = 3
 var score = 0;
 var gamestate = "start"
 
@@ -49,19 +50,15 @@ function setup() {
   title = createSprite(width/2, height/4)
   title.addImage(titleI)
 
-  hGroup = new Group()
   heart1 = createSprite(width/40, height/20)
   heart1.scale = 0.1
   heart1.addImage(hImage)
-  hGroup.add(heart1)
   heart2 = createSprite(width/18, height/20)
   heart2.scale = 0.1
   heart2.addImage(hImage)
-  hGroup.add(heart2)
   heart3 = createSprite(width/11.5, height/20)
   heart3.scale = 0.1
   heart3.addImage(hImage)
-  hGroup.add(heart3)
 
   oGroup = new Group()
 }
@@ -70,7 +67,9 @@ function setup() {
 function draw() {
   background(rgb(230, 200, 75))
   if (gamestate == "start") {
-    hGroup.visibleAll = false
+    heart1.visible = false
+    heart2.visible = false
+    heart3.visible = false
     bird.visible = false
     backButton.visible = false
     playButton.visible = true
@@ -78,13 +77,18 @@ function draw() {
     title.visible = true
     if(mousePressedOver(playButton)) {
       gamestate = "play"
+      heart1.visible = true
+      heart2.visible = true
+      heart3.visible = true
     }
     if(mousePressedOver(howButton)) {
       gamestate = "how"
     }
   }
   if (gamestate == "how") {
-    hGroup.visible = false
+    heart1.visible = false
+    heart2.visible = false
+    heart3.visible = false
     playButton.visible = false
     howButton.visible = false
     title.visible = false
@@ -98,7 +102,6 @@ function draw() {
     text("Move the bird by pressing space or up arrow key to fly. \nDodge the monsters.", width/15, height/3)
   }
   if (gamestate == "play") {
-    hGroup.visible = true
     backButton.visible = false
     title.visible = false
     playButton.visible = false
@@ -108,8 +111,30 @@ function draw() {
     fill("white")
     textSize(50)
     text(score, width/2, height/2)
-    if(bird.isTouching(edges) || bird.isTouching(oGroup)){
+    if(heartsLeft == 3) {
+      heart1.visible = true
+      heart2.visible = true
+      heart3.visible = true
+    }
+    else if(heartsLeft == 2) {
+      heart1.visible = true
+      heart2.visible = true
+      heart3.visible = false
+    }
+    else if(heartsLeft == 1) {
+      heart1.visible = true
+      heart2.visible = false
+      heart3.visible = false
+    }
+    if(heartsLeft == 0) {
       gamestate = "end"
+    }
+    if(bird.isTouching(edges)){
+      gamestate = "end"
+    }
+    if(bird.isTouching(oGroup)) {
+      oGroup.destroyEach()
+      heartsLeft -= 1
     }
     if(keyDown("up") || keyDown("space")){
       bird.velocityY = -10
@@ -117,6 +142,9 @@ function draw() {
     spawnO()
   }
   else if (gamestate == "end") {
+    heart1.visible = false
+    heart2.visible = false
+    heart3.visible = false
     background("black")
     bird.visible = false
     oGroup.destroyEach()

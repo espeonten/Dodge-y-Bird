@@ -99,7 +99,7 @@ function draw() {
     }
     textSize(50)
     fill("black")
-    text("Move the bird by pressing space or up arrow key to fly. \nDodge the monsters.", width/15, height/3)
+    text("Move the bird by pressing space or up arrow key to fly. \nDodge the monsters. If you get hit by a monster, you will lose 1 life. \nIf you lose all 3 lives or hit the ceiling/floor, you LOSE!", width/15, height/4)
   }
   if (gamestate == "play") {
     backButton.visible = false

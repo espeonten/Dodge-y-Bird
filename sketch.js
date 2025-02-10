@@ -67,6 +67,8 @@ function setup() {
 function draw() {
   background(rgb(230, 200, 75))
   if (gamestate == "start") {
+    bird.y = height/2
+    bird.velocityY = 0
     heart1.visible = false
     heart2.visible = false
     heart3.visible = false
@@ -86,6 +88,8 @@ function draw() {
     }
   }
   if (gamestate == "how") {
+    bird.y = height/2
+    bird.velocityY = 0
     heart1.visible = false
     heart2.visible = false
     heart3.visible = false
@@ -131,7 +135,7 @@ function draw() {
     }
     if(bird.isTouching(oGroup)) {
       heartsLeft -= 1
-      oGroup[0].destroy()
+      oGroup.destroyEach()
     }
     if(bird.isTouching(edges)){
       gamestate = "end"
@@ -142,6 +146,8 @@ function draw() {
     spawnO()
   }
   else if (gamestate == "end") {
+    bird.y = height/2
+    bird.velocityY = 0
     heart1.visible = false
     heart2.visible = false
     heart3.visible = false

@@ -171,7 +171,7 @@ function spawnO() {
     obstacle.debug = false
     obstacle.addImage(oImage)
     obstacle.velocityX = -(score+20)
-    score = obstacle.depth - 6
+    score += 1
     obstacle.lifetime = width - 1640
     oGroup.add(obstacle)
 }}
